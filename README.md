@@ -3,11 +3,17 @@
 
 ## Development
 *   Startup development environment.
-        npm install
+```sh
+npm install
+```
 *   Build with webpack.
-        npm run webpack
+```sh
+npm run webpack
+```
 *   Run with webpack test server.
-        npm run start
+```sh
+npm run start
+```
 
 ## ChangeLog
 ##### 190509
