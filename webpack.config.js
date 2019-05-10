@@ -1,8 +1,9 @@
 const path = require('path');
+const merge = require('webpack-merge');
 
-const htmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+let cfg = {
   entry: path.join(__dirname,'src','index.js'),
   output: {
     path: path.join(__dirname,'build'),
@@ -12,12 +13,50 @@ module.exports = {
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
-  devServer: {
-    contentBase: path.join(__dirname,'src')
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets:['@babel/env', '@babel/react']
+            }
+          }
+          // {loader: 'eslint-loader'}
+        ]
+      },
+      {
+        test: /\.s?css$/,
+        use: [
+          "style-loader", // creates style nodes from JS strings
+          "css-loader", // translates CSS into CommonJS
+          "sass-loader" // compiles Sass to CSS, using Node Sass by default          }
+        ]
+      }
+    ]
   },
   plugins: [
-    new htmlWebpackPlugin({
+    new HtmlWebpackPlugin({
       template: path.join(__dirname,'src','index.html')
     })
   ]
 };
+
+cfg = merge(cfg, process.env.NODE_ENV === 'production' ?
+  {
+
+  } :
+  {
+    devtool: 'source-map',
+    devServer: {
+      contentBase: path.join(__dirname,'src'),
+      host: "0.0.0.0",
+      port: 8090,
+      hot: true
+    },
+  });
+
+module.exports = cfg;
