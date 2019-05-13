@@ -22,7 +22,9 @@ let cfg = {
           {
             loader: 'babel-loader',
             options: {
-              presets:['@babel/env', '@babel/react']
+              cacheDirectory: true,
+              presets: ['@babel/env', '@babel/react'],
+              plugins: ['@babel/plugin-proposal-class-properties']
             }
           }
           // {loader: 'eslint-loader'}
@@ -34,6 +36,15 @@ let cfg = {
           "style-loader", // creates style nodes from JS strings
           "css-loader", // translates CSS into CommonJS
           "sass-loader" // compiles Sass to CSS, using Node Sass by default          }
+        ]
+      },
+      {
+        test: /\.(jpe?g|png|svg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {limit: 4000}
+          }
         ]
       }
     ]
