@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="theme-color" content="#000000"/>
+    <script src="../blockly/blockly_compressed.js"></script>
+    <script src="../blockly/blocks_compressed.js"></script>
+    <script src="../blockly/msg/js/en.js"></script>
+    <script src="../blockly/javascript_compressed.js"></script>
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+  </style>
+  <body>
+    <div style="display:flex;flex-wrap:nowrap;height:99%;">
+      <div id="blocklyArea" style="height:99%;flex-grow:3;"></div>
+      <textarea id="codeGenArea" style="height:99%;flex-grow:1;"></textarea>
+    </div>
+    <div id="blocklyDiv" style="position:absolute;"></div>
+    <xml id="toolbox" style="display:none;">
+      <category name="Control" colour="#800080">
+        <block type="controls_if"></block>
+        <block type="controls_repeat_ext"></block>
+        <block type="controls_for">
+          <value name="FROM">
+            <field name="NUM">1</field>
+          </value>
+          <value name="TO">
+            <field name="NUM">10</field>
+          </value>
+          <value name="BY">
+            <block type="math_number">
+              <field name="NUM">1</field>
+            </block>
+          </value>
+        </block>
+      </category>
+      <category name="Others" colour="#808000">
+        <block type="logic_compare"></block>
+        <block type="math_number"></block>
+        <block type="math_arithmetic"></block>
+        <block type="text"></block>
+        <block type="text_print"></block>
+      </category>
+    </xml>
+
+    <script>
+      let blocklyArea = document.getElementById("blocklyArea");
+      let blocklyDiv = document.getElementById("blocklyDiv");
+      var workspace = Blockly.inject('blocklyDiv', {
+        media: "../blockly/media",
+        toolbox: document.getElementById('toolbox')});
+      let onresize = (e) => {
+        let x, y;
+        x = y = 0;
+
+        let ele = blocklyArea;
+        do {
+          x += ele.offsetLeft;
+          y += ele.offsetTop;
+          ele = ele.offsetParent;
+        } while (ele);
+
+        blocklyDiv.style.left = `${x}px`;
+        blocklyDiv.style.top = `${y}px`;
+        blocklyDiv.style.width = `${blocklyArea.offsetWidth}px`;
+        blocklyDiv.style.height = `${blocklyArea.offsetHeight}px`;
+        Blockly.svgResize(workspace);
+      };
+      window.addEventListener('resize', onresize, false);
+      onresize();
+      Blockly.svgResize(workspace);
+
+      let onblockchanged = (event) => {
+        var code = Blockly.JavaScript.workspaceToCode(workspace);
+        document.getElementById('codeGenArea').value = code;
+      };
+      workspace.addChangeListener(onblockchanged);
+    </script>
+  </body>
+</html>

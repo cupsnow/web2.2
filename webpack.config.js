@@ -1,6 +1,5 @@
 const path = require('path');
 const merge = require('webpack-merge');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 let cfg = {
@@ -35,7 +34,8 @@ let cfg = {
         use: [
           "style-loader", // creates style nodes from JS strings
           "css-loader", // translates CSS into CommonJS
-          "sass-loader" // compiles Sass to CSS, using Node Sass by default          }
+          "sass-loader", // compiles Sass to CSS, using Node Sass by default          }
+          "resolve-url-loader" // url-rewrite for sass
         ]
       },
       {
@@ -46,12 +46,20 @@ let cfg = {
             options: {limit: 4000}
           }
         ]
+      },
+      {
+        test: /index.ejs$/,
+        loader: 'ejs-loader',
+        query: {
+
+        }
       }
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname,'src','index.html')
+      template: path.join(__dirname,'src','index.ejs'),
+      title: 'ShowTime'
     })
   ]
 };
