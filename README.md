@@ -16,6 +16,13 @@ npm run start
 ```
 
 ## ChangeLog
+##### 210513
+*   Upgrade environment/packages.
+*   Development environment
+    *   Ubuntu 20.04.
+    *   NodeJS 16.1.0.
+    *   Keep node_modules in project scope.
+
 ##### 190509
 *   Reference [this](https://medium.freecodecamp.org/how-to-use-reactjs-with-webpack-4-babel-7-and-material-design-ff754586f618) for startup guideline.
 *   Development environment

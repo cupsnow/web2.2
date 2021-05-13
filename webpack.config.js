@@ -1,5 +1,5 @@
 const path = require('path');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 let cfg = {
@@ -34,8 +34,7 @@ let cfg = {
         use: [
           "style-loader", // creates style nodes from JS strings
           "css-loader", // translates CSS into CommonJS
-          "sass-loader", // compiles Sass to CSS, using Node Sass by default          }
-          "resolve-url-loader" // url-rewrite for sass
+          "sass-loader" // compiles Sass to CSS, using Node Sass by default          }
         ]
       },
       {
@@ -50,8 +49,8 @@ let cfg = {
       {
         test: /index.ejs$/,
         loader: 'ejs-loader',
-        query: {
-
+        options: {
+          esModule: false
         }
       }
     ]
@@ -73,7 +72,7 @@ cfg = merge(cfg, process.env.NODE_ENV === 'production' ?
     devServer: {
       contentBase: path.join(__dirname,'src'),
       host: "0.0.0.0",
-      port: 8090,
+      port: 8765,
       hot: true
     },
   });
