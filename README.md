@@ -29,6 +29,10 @@ sudo sysctl fs.inotify.max_user_watches=80000
 
 # ChangeLog
 
+## 220207
+
+- Update to webpack devServer4
+
 ## 210513
 
 - Upgrade environment/packages.
