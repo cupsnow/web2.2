@@ -70,7 +70,9 @@ cfg = merge(cfg, process.env.NODE_ENV === 'production' ?
   {
     devtool: 'source-map',
     devServer: {
-      contentBase: path.join(__dirname,'src'),
+      static: {
+        directory: path.join(__dirname,'src'),
+      },
       host: "0.0.0.0",
       port: 8765,
       hot: true
